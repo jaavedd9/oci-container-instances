@@ -1,6 +1,6 @@
 # Terraform Automation on Oracle Cloud : Migrate from V1 to V2 with x Container Instances (private network) without service interruption (due to the use of a Loab Balancer (public network) to access them)
 
-This project has been designed to run outside Oracle OCI Stacks Resource Manager (so simply with terraform). Nevertheless you can use it in OCI Stacks Resource Manager but you should comment some lines in 2 files (variables.tf, provider.tf and main.tf). In these 3 files I put information on where you need to comment.
+This project has been designed to run outside Oracle OCI Stacks Resource Manager (so simply with terraform). Nevertheless you can use it in OCI Stacks Resource Manager but you should comment some lines in 3 files (variables.tf, provider.tf and main.tf). In these 3 files I put information on where you need to comment.
 
 ## Prerequisites
 
