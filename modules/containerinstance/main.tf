@@ -106,8 +106,8 @@ resource "oci_container_instances_container_instance" "this" {
     memory_in_gbs = var.ci_memory
   }
   vnics {
-    display_name           = "nicname${count.index}"
-    hostname_label         = "hostname${count.index}"
+    display_name           = "nicname${var.ci_name}${count.index}"
+    hostname_label         = "hostname${var.ci_name}${count.index}"
     subnet_id              = var.private_subnet_ocid
     skip_source_dest_check = false
     is_public_ip_assigned  = false
