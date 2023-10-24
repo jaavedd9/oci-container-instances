@@ -114,6 +114,9 @@ resource "oci_container_instances_container_instance" "this" {
   }
   containers {
     display_name          = "${var.ci_container_name}${count.index}"
+    environment_variables = {
+      "MyVariable" = "MyValue"
+    }
     image_url             = var.ci_image_url
   }
 
