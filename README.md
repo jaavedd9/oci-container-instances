@@ -7,11 +7,13 @@ This project has been designed to run outside Oracle OCI Stacks Resource Manager
 Before Starting you need to create a Secret in Oracle OCI Vault for being able to connect to the OCI Registry where your docker images for Container Instances are stored.
 
 1) Create the secret. It is a JSON String like below : 
-
+ - optional when policy gives the dyanamic group of CI access to fetch
 {
 "username": "charles-foster-kane",
 "password": "rosebud"
 } 
+
+
 
 2) Create a Dynamic Group for Container Instance in your compratment
    
@@ -20,6 +22,7 @@ Before Starting you need to create a Secret in Oracle OCI Vault for being able t
 3) Create a Policy to allow Container Instance read Secret
 
 allow dynamic-group <dynamic-group-name> to read secret-bundles in tenancy
+allow dynamic-group <dynamic-group-name> to read repos in tenancy	
 
 ## Create the Stack
 
@@ -37,7 +40,21 @@ You can look at the variables and see :
   - public_subnet_ocid
   - ci_image_url (Image version V1)
   - ci_image_url_bis (Image version V2)
-  - ci_registry_secret (ocid)
+  - ci_registry_secret (ocid) # optional when policy gives the dyanamic group of CI access to fetch
+  the repos 
+
+##  terraform commands
+
+macOS or Linux
+`
+# from root
+cp env-vars-template.sh env-vars.sh
+# edit the env variables
+source ./env-vars.sh
+terraform init
+terraform plan
+terraform apply
+`
 
 ## Migrate from V1 to V2 without interruption service
 
