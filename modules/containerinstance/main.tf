@@ -123,14 +123,17 @@ resource "oci_container_instances_container_instance" "this" {
     memory_in_gbs = var.ci_memory
   }
   vnics {
-    display_name           = "nicname${count.index}"
-    hostname_label         = "hostname${count.index}"
+    display_name           = "nicnamenew${count.index}"
+    hostname_label         = "hostnamenew${count.index}"
     subnet_id              = var.private_subnet_ocid
     skip_source_dest_check = false
     is_public_ip_assigned  = false
   }
   containers {
     display_name          = "${var.ci_container_name}${count.index}"
+    environment_variables = {
+      "MyVariable" = "MyValue"
+    }
     image_url             = var.ci_image_url
     environment_variables = {
           "DATABASE_URL" = "${var.ci_container_env_variables.DATABASE_URL}"
