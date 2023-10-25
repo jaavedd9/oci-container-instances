@@ -132,10 +132,6 @@ resource "oci_container_instances_container_instance" "this" {
   containers {
     display_name          = "${var.ci_container_name}${count.index}"
     environment_variables = {
-      "MyVariable" = "MyValue"
-    }
-    image_url             = var.ci_image_url
-    environment_variables = {
           "DATABASE_URL" = "${var.ci_container_env_variables.DATABASE_URL}"
           "EGS_PRIVATE_KEY" = "${var.ci_container_env_variables.EGS_PRIVATE_KEY}"
           "ZATCA_BINARY_SECURITY_TOKEN" = "${var.ci_container_env_variables.ZATCA_BINARY_SECURITY_TOKEN}"
@@ -143,6 +139,7 @@ resource "oci_container_instances_container_instance" "this" {
           "EGS_UUID" = "${var.ci_container_env_variables.EGS_UUID}"
           "DEVELOPMENT_MODE" = "${var.ci_container_env_variables.DEVELOPMENT_MODE}"
     }
+    image_url             = var.ci_image_url
   }
 
   image_pull_secrets {
