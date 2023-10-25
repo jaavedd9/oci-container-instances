@@ -43,18 +43,18 @@ You can look at the variables and see :
   - ci_registry_secret (ocid) # optional when policy gives the dyanamic group of CI access to fetch
   the repos 
 
-##  terraform commands
-
-macOS or Linux
-`
+## On macOS or Linux
+```
 # from root
 cp env-vars-template.sh env-vars.sh
 # edit the env variables
 source ./env-vars.sh
+
+# Terraform commands
 terraform init
 terraform plan
 terraform apply
-`
+```
 
 ## Migrate from V1 to V2 without interruption service
 
