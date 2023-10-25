@@ -38,3 +38,6 @@ terraform.rc
 
 # Ignore my windows Env Var
 /env-vars.ps1
+
+# Ignore macOS or Linux env variabes
+/env-vars.sh

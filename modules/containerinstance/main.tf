@@ -62,6 +62,8 @@ variable "ci_container_name" {
     default     = "CI_CONTAINER_NAME"
 }
 
+
+
 variable "ci_image_url" {
     description = "The OCI Container Image Url"
     type        = string
@@ -82,10 +84,25 @@ variable "ci_count_bis" {
     type        = number
 }
 
+
 variable "ci_registry_secret" {
     description = "The OCI Vault Secret Id with username and password of OCI registry"
     type        = string
 }
+
+variable "ci_container_env_variables" {
+  description = "OCI Container Environment Variables"
+  type        = map(string)
+  default     = {
+    DATABASE_URL                 = null
+    EGS_PRIVATE_KEY              = null
+    ZATCA_BINARY_SECURITY_TOKEN  = null
+    ZATCA_SECRET                 = null
+    EGS_UUID                     = null
+    DEVELOPMENT_MODE             = null
+  }
+}
+
 
 #Get Availaibility Domains. We use only first AD. 
 #TODO Later (Add logic for multi Ads Domain)
@@ -115,7 +132,12 @@ resource "oci_container_instances_container_instance" "this" {
   containers {
     display_name          = "${var.ci_container_name}${count.index}"
     environment_variables = {
-      "MyVariable" = "MyValue"
+          "DATABASE_URL" = "${var.ci_container_env_variables.DATABASE_URL}"
+          "EGS_PRIVATE_KEY" = "${var.ci_container_env_variables.EGS_PRIVATE_KEY}"
+          "ZATCA_BINARY_SECURITY_TOKEN" = "${var.ci_container_env_variables.ZATCA_BINARY_SECURITY_TOKEN}"
+          "ZATCA_SECRET" = "${var.ci_container_env_variables.ZATCA_SECRET}"
+          "EGS_UUID" = "${var.ci_container_env_variables.EGS_UUID}"
+          "DEVELOPMENT_MODE" = "${var.ci_container_env_variables.DEVELOPMENT_MODE}"
     }
     image_url             = var.ci_image_url
   }
@@ -152,6 +174,14 @@ resource "oci_container_instances_container_instance" "thisbis" {
   }
   containers {
     display_name          = "${var.ci_container_name}${count.index}"
+    environment_variables = {
+          "DATABASE_URL" = "${var.ci_container_env_variables.DATABASE_URL}"
+          "EGS_PRIVATE_KEY" = "${var.ci_container_env_variables.EGS_PRIVATE_KEY}"
+          "ZATCA_BINARY_SECURITY_TOKEN" = "${var.ci_container_env_variables.ZATCA_BINARY_SECURITY_TOKEN}"
+          "ZATCA_SECRET" = "${var.ci_container_env_variables.ZATCA_SECRET}"
+          "EGS_UUID" = "${var.ci_container_env_variables.EGS_UUID}"
+          "DEVELOPMENT_MODE" = "${var.ci_container_env_variables.DEVELOPMENT_MODE}"
+    }
     image_url             = var.ci_image_url_bis
   }
 

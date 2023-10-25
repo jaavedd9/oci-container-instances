@@ -26,4 +26,5 @@ $env:TF_VAR_ci_registry_secret="ocid1.vaultsecret.oc1.eu-frankfurt-1.***********
 $env:TF_VAR_ci_count=1
 $env:TF_VAR_ci_count_bis=1
 
-
+# Container ENV variables
+$env:TF_VAR_ci_container_env_variables='{ DATABASE_URL = "mysql://username:xyz@ip:port/db-name", DEVELOPMENT_MODE = "on" }'
