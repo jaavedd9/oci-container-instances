@@ -28,6 +28,7 @@ module "containerinstance" {
   ci_registry_secret = var.ci_registry_secret
   ci_count = var.ci_count
   ci_count_bis = var.ci_count_bis
+  ci_container_env_variables = var.ci_container_env_variables
 }
 
 module "loadbalancer" {

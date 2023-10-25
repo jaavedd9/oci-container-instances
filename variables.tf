@@ -113,6 +113,20 @@ variable "ci_count_bis" {
     type        = number
 }
 
+
+variable "ci_container_env_variables" {
+  description = "OCI Container Environment Variables"
+  type        = map(string)
+  default     = {
+    DATABASE_URL                 = null
+    EGS_PRIVATE_KEY              = null
+    ZATCA_BINARY_SECURITY_TOKEN  = null
+    ZATCA_SECRET                 = null
+    EGS_UUID                     = null
+    DEVELOPMENT_MODE             = null
+  }
+}
+
 variable "load_balancer_shape_details_maximum_bandwidth_in_mbps" {
     description = "The OCI LB Max Bandwith"  
     type        = number
@@ -160,4 +174,5 @@ variable "lb_backend_port" {
     type        = number
     default     = 8000
 }
+
 
