@@ -29,3 +29,5 @@ export TF_VAR_ci_count_bis=1
 # Container ENV variables
 export TF_VAR_ci_container_env_variables='{ DATABASE_URL = "mysql://username:xyz@ip:port/db-name", DEVELOPMENT_MODE = "on" }'
 
+# DNS Zone Name
+export TF_VAR_zone_name="test.com"
