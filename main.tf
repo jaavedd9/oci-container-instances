@@ -51,5 +51,5 @@ module "dns" {
 
   compartment_ocid = var.compartment_ocid
   zone_name = var.zone_name
-  lb_ip_address = module.loadbalancer.public_ip_lb[ip_address]
+  lb_ip_address_details  = module.loadbalancer.public_ip_lb
 }
