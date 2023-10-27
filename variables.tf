@@ -124,6 +124,9 @@ variable "ci_container_env_variables" {
     ZATCA_SECRET                 = null
     EGS_UUID                     = null
     DEVELOPMENT_MODE             = null
+    DB_URL                       = null
+    DB_USERNAME                  = null
+    DB_PASSWORD                  = null
   }
 }
 

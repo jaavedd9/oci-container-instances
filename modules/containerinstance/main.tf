@@ -100,6 +100,9 @@ variable "ci_container_env_variables" {
     ZATCA_SECRET                 = null
     EGS_UUID                     = null
     DEVELOPMENT_MODE             = null
+    DB_URL                       = null
+    DB_USERNAME                  = null
+    DB_PASSWORD                  = null
   }
 }
 
@@ -138,6 +141,9 @@ resource "oci_container_instances_container_instance" "this" {
           "ZATCA_SECRET" = "${var.ci_container_env_variables.ZATCA_SECRET}"
           "EGS_UUID" = "${var.ci_container_env_variables.EGS_UUID}"
           "DEVELOPMENT_MODE" = "${var.ci_container_env_variables.DEVELOPMENT_MODE}"
+          "DB_URL" = "${var.ci_container_env_variables.DB_URL}"
+          "DB_USERNAME" = "${var.ci_container_env_variables.DB_USERNAME}"
+          "DB_PASSWORD" = "${var.ci_container_env_variables.DB_PASSWORD}"
     }
     image_url             = var.ci_image_url
   }
