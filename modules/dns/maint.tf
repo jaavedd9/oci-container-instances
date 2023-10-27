@@ -8,9 +8,9 @@ variable "zone_name" {
     type        = string
 }
 
-variable "lb_ip_address_details" {
+variable "lb_ip_address" {
     description = "The OCI LB CI IP Address"
-    type        = map(string)
+    type        = string
 }
 
 resource "oci_dns_zone" "zone1" {
@@ -37,7 +37,7 @@ resource "oci_dns_rrset" "test_rrset" {
     items {
         #Required
         domain = var.zone_name
-        rdata = lookup(var.lb_ip_address_details, "ip_address")
+        rdata = var.lb_ip_address
         rtype = "A"
         ttl = 30
     }
