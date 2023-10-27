@@ -32,7 +32,7 @@ resource "oci_dns_rrset" "test_rrset" {
     #Required
     domain = var.zone_name
     rtype = "A"
-    zone_name_or_id = oci_dns_zone.test_zone.id
+    zone_name_or_id = oci_dns_zone.zone1.id
 
     items {
         #Required
