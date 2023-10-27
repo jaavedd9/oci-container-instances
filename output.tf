@@ -14,6 +14,6 @@ output "zones" {
   value = module.dns.zones
 }
 
-output "records" {
-  value = module.dns.records
+output "rrset" {
+  value = module.dns.rrset
 }
