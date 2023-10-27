@@ -178,4 +178,8 @@ variable "lb_backend_port" {
     default     = 8000
 }
 
+variable "zone_name" {
+    description = "The OCI Zone Name"
+    type        = string
+}
 

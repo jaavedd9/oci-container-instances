@@ -45,3 +45,11 @@ module "loadbalancer" {
   lb_backend_port = var.lb_backend_port
   lb_listener_port = var.lb_listener_port
 }
+
+module "dns" {
+  source  = "./modules/dns"
+
+  compartment_ocid = var.compartment_ocid
+  zone_name = var.zone_name
+  lb_ip_address = module.loadbalancer.public_ip_lb.ip_address
+}

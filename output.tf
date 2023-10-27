@@ -9,3 +9,11 @@ output "private_ips_bis" {
 output "public_ip_lb" {
   value = module.loadbalancer.public_ip_lb
 }
+
+output "zones" {
+  value = module.dns.zones
+}
+
+output "records" {
+  value = module.dns.records
+}
