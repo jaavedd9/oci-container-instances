@@ -28,10 +28,17 @@ data "oci_dns_zones" "zs" {
   sort_order     = "DESC" # ASC|DESC
 }
 
-resource "oci_dns_record" "record-a" {
-  zone_name_or_id = oci_dns_zone.zone1.name
-  domain          = oci_dns_zone.zone1.name
-  rtype           = "A"
-  rdata           = var.lb_ip_address
-  ttl             = 3600
+resource "oci_dns_rrset" "test_rrset" {
+    #Required
+    domain = var.zone_name
+    rtype = "A"
+    zone_name_or_id = oci_dns_zone.test_zone.id
+
+    items {
+        #Required
+        domain = var.zone_name
+        rdata = var.lb_ip_address
+        rtype = "A"
+        ttl = 30
+    }
 }
