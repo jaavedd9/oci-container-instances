@@ -37,7 +37,7 @@ resource "oci_dns_rrset" "test_rrset" {
     items {
         #Required
         domain = var.zone_name
-        rdata = var.lb_ip_address_details[ip_address]
+        rdata = lookup(var.lb_ip_address_details, "ip_address")
         rtype = "A"
         ttl = 30
     }
