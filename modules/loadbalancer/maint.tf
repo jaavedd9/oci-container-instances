@@ -8,6 +8,12 @@ variable "public_subnet_ocid" {
     type        = string
 }
 
+variable "private_subnet_ocid" {
+    description = "The OCI Private Subnet ocid"
+    type        = string
+}
+
+
 variable "load_balancer_shape_details_maximum_bandwidth_in_mbps" {
     description = "The OCI LB Max Bandwith"  
     type        = number
@@ -58,10 +64,11 @@ variable "lb_backend_port" {
 resource "oci_load_balancer" "flex_lb" {
   shape          = "flexible"
   compartment_id = var.compartment_ocid
-  is_private = false
+  is_private = true
 
   subnet_ids = [
-    var.public_subnet_ocid
+    # var.public_subnet_ocid
+     var.private_subnet_ocid
   ]
 
   shape_details {
@@ -80,7 +87,8 @@ resource "oci_load_balancer_backend_set" "lb-bes1" {
 
   health_checker {
     port                = var.lb_checker_health_port
-    protocol            = "HTTP"
+    protocol            = "TCP"
+    # protocol            = "HTTP"
     response_body_regex = ".*"
     url_path            = var.lb_checker_url_path
   }

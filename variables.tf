@@ -166,7 +166,7 @@ variable "lb_checker_url_path" {
 variable "lb_listener_port" {
     description = "The OCI LB Listener Port"
     type        = number
-    default     = 8000
+    default     = 80
 }
 
 variable "lb_backend_port" {
@@ -176,3 +176,29 @@ variable "lb_backend_port" {
 }
 
 
+variable "public_apigateway_ocid" {
+    description = "The OCI Public API Gateway ocid"
+    type        = string
+}
+
+
+variable "fingerprint" {
+    description = "The Fingerprint of the OCI API Key"
+    type        = string
+}
+
+
+variable "private_key_path" {
+    description = "The Path of the OCI API Key"
+    type        = string
+}
+
+variable "user_ocid" {
+    description = "The OCI User ocid"
+    type        = string
+}
+
+variable "tenancy_ocid" {
+    description = "The OCI Tenancy ocid"
+    type        = string
+}

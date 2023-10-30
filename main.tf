@@ -35,6 +35,7 @@ module "loadbalancer" {
   source  = "./modules/loadbalancer"
 
   compartment_ocid  = var.compartment_ocid
+  private_subnet_ocid = var.private_subnet_ocid
   public_subnet_ocid = var.public_subnet_ocid
   load_balancer_shape_details_minimum_bandwidth_in_mbps = var.load_balancer_shape_details_minimum_bandwidth_in_mbps
   load_balancer_shape_details_maximum_bandwidth_in_mbps = var.load_balancer_shape_details_maximum_bandwidth_in_mbps
@@ -44,4 +45,20 @@ module "loadbalancer" {
   lb_checker_url_path = var.lb_checker_url_path
   lb_backend_port = var.lb_backend_port
   lb_listener_port = var.lb_listener_port
+}
+
+
+module "api_gateway" {
+  source  = "./modules/api_gateway"
+   
+  compartment_ocid  = var.compartment_ocid
+  public_subnet_ocid = var.public_subnet_ocid
+  region = var.region
+  tenancy_ocid = var.tenancy_ocid
+  user_ocid = var.user_ocid
+  private_key_path = var.private_key_path
+  fingerprint = var.fingerprint
+  public_apigateway_ocid = var.public_apigateway_ocid
+  private_ip_lb = module.loadbalancer.private_ip_lb
+  deployment_specification_routes_backend_url =  "http://${module.loadbalancer.private_ip_lb[0].ip_address}/api/invoices/"
 }

@@ -14,6 +14,7 @@ export TF_VAR_region="eu-frankfurt-1"
 export TF_VAR_private_subnet_ocid="ocid1.subnet.oc1.eu-frankfurt-1.*************************"
 export TF_VAR_public_subnet_ocid="ocid1.subnet.oc1.eu-frankfurt-1.**************************"
 
+
 # Availability Domain
 export TF_VAR_availability_domain="Vihs:EU-FRANKFURT-1-AD-1"
 
@@ -29,3 +30,6 @@ export TF_VAR_ci_count_bis=1
 # Container ENV variables
 export TF_VAR_ci_container_env_variables='{ DATABASE_URL = "mysql://username:xyz@ip:port/db-name", DEVELOPMENT_MODE = "on" }'
 
+
+# API-Gateway
+export TF_VAR_public_apigateway_ocid="ocid1.apigateway.oc1.eu-frankfurt-1.**************************"
