@@ -1,6 +1,10 @@
 # Terraform Automation on Oracle Cloud : Migrate from V1 to V2 with x Container Instances (private network) without service interruption (due to the use of a Loab Balancer (public network) to access them)
 
-This project has been designed to run outside Oracle OCI Stacks Resource Manager (so simply with terraform). Nevertheless you can use it in OCI Stacks Resource Manager but you should comment some lines in 3 files (variables.tf, provider.tf and main.tf). In these 3 files I put information on where you need to comment.
+This project has been designed to run inside Oracle OCI Stacks Resource Manager (so simply with terraform). Nevertheless you can use it outside OCI Stacks Resource Manager but you should uncomment some lines in 3 files (variables.tf, provider.tf and main.tf). In these 3 files I put information on where you need to uncomment.
+
+Note 1 : You must know Terraform to use id (Terraform Plan, Apply, Delete, ..)
+
+Note 2 : A new module for the OCI dns is added so the OCI Domain Name will be created automatically.
 
 ## Prerequisites
 
@@ -12,8 +16,6 @@ Before Starting you need to create a Secret in Oracle OCI Vault for being able t
 "username": "charles-foster-kane",
 "password": "rosebud"
 } 
-
-
 
 2) Create a Dynamic Group for Container Instance in your compratment
    
@@ -32,7 +34,7 @@ This project consider that your network configuration is done. It means :
 - The security list of the private subnet has an ingress rule for the container instances port
 
 You can look at the variables and see : 
-- Some of the variables have default values than can be updated by yourself or not (using the env-var-template.ps1 or with Stack Ressource Manager Variables)
+- Some of the variables have default values than can be updated by yourself or not (using the env-var-template.ps1(or.sh) or with Stack Ressource Manager Variables)
 - Some other variables have no default value and are mandatory so you must know them.
   - compartment_ocid
   - region
@@ -40,21 +42,8 @@ You can look at the variables and see :
   - public_subnet_ocid
   - ci_image_url (Image version V1)
   - ci_image_url_bis (Image version V2)
-  - ci_registry_secret (ocid) # optional when policy gives the dyanamic group of CI access to fetch
-  the repos 
-
-## On macOS or Linux
-```
-# from root
-cp env-vars-template.sh env-vars.sh
-# edit the env variables
-source ./env-vars.sh
-
-# Terraform commands
-terraform init
-terraform plan
-terraform apply
-```
+  - ci_registry_secret (ocid) # optional when policy gives the dyanamic group of CI access to fetch the repos 
+  - domain name of the OCI DNS (that makes the relation with the LB IP Address)
 
 ## Migrate from V1 to V2 without interruption service
 
