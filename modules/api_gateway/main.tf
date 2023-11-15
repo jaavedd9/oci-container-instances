@@ -125,13 +125,13 @@ resource "oci_apigateway_deployment" "test_deployment" {
   }
 }
 
-data "oci_apigateway_gateways" "test_gateways" {
-  #Required
-  compartment_id = var.compartment_ocid
+# data "oci_apigateway_gateways" "test_gateways" {
+#   #Required
+#   compartment_id = var.compartment_ocid
 
-  #Optional
-  state        = var.gateway_state
-}
+#   #Optional
+#   state        = var.gateway_state
+# }
 
 data "oci_apigateway_deployments" "test_deployments" {
   #Required
