@@ -95,10 +95,7 @@ variable "ci_container_env_variables" {
   type        = map(string)
   default     = {
     DATABASE_URL                 = null
-    EGS_PRIVATE_KEY              = null
-    ZATCA_BINARY_SECURITY_TOKEN  = null
-    ZATCA_SECRET                 = null
-    EGS_UUID                     = null
+    AES_MASTER_KEY               = null
     DEVELOPMENT_MODE             = null
   }
 }
@@ -133,10 +130,7 @@ resource "oci_container_instances_container_instance" "this" {
     display_name          = "${var.ci_container_name}${count.index}"
     environment_variables = {
           "DATABASE_URL" = "${var.ci_container_env_variables.DATABASE_URL}"
-          "EGS_PRIVATE_KEY" = "${var.ci_container_env_variables.EGS_PRIVATE_KEY}"
-          "ZATCA_BINARY_SECURITY_TOKEN" = "${var.ci_container_env_variables.ZATCA_BINARY_SECURITY_TOKEN}"
-          "ZATCA_SECRET" = "${var.ci_container_env_variables.ZATCA_SECRET}"
-          "EGS_UUID" = "${var.ci_container_env_variables.EGS_UUID}"
+          "AES_MASTER_KEY" = "${var.ci_container_env_variables.AES_MASTER_KEY}"
           "DEVELOPMENT_MODE" = "${var.ci_container_env_variables.DEVELOPMENT_MODE}"
     }
     image_url             = var.ci_image_url
@@ -176,10 +170,7 @@ resource "oci_container_instances_container_instance" "thisbis" {
     display_name          = "${var.ci_container_name}${count.index}"
     environment_variables = {
           "DATABASE_URL" = "${var.ci_container_env_variables.DATABASE_URL}"
-          "EGS_PRIVATE_KEY" = "${var.ci_container_env_variables.EGS_PRIVATE_KEY}"
-          "ZATCA_BINARY_SECURITY_TOKEN" = "${var.ci_container_env_variables.ZATCA_BINARY_SECURITY_TOKEN}"
-          "ZATCA_SECRET" = "${var.ci_container_env_variables.ZATCA_SECRET}"
-          "EGS_UUID" = "${var.ci_container_env_variables.EGS_UUID}"
+          "AES_MASTER_KEY" = "${var.ci_container_env_variables.AES_MASTER_KEY}"
           "DEVELOPMENT_MODE" = "${var.ci_container_env_variables.DEVELOPMENT_MODE}"
     }
     image_url             = var.ci_image_url_bis

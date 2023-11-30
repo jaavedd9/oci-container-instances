@@ -41,11 +41,15 @@ variable "deployment_path_prefix" {
   default = "/v2"
 }
 
+variable "domain_url" {
+  default = ""
+}
+
 variable "deployment_specification_routes_backend_type" {
   default = "HTTP_BACKEND"
 }
 
-variable "deployment_specification_routes_backend_url" {
+variable "deployment_specification_routes_backend_base_url" {
   default = null 
 }
 
@@ -98,46 +102,99 @@ variable "private_ip_lb" {
 #   dns_label      = "tfexamplevcn"
 # }
 
-resource "oci_apigateway_gateway" "test_gateway" {
-  #Required
-  compartment_id = var.compartment_ocid
-  endpoint_type  = var.gateway_endpoint_type
-  subnet_id      = var.public_subnet_ocid 
-}
+# resource "oci_apigateway_gateway" "test_gateway" {
+#   #Required
 
-resource "oci_apigateway_deployment" "test_deployment" {
+#   display_name   = var.api_gateway_name
+#   compartment_id = var.compartment_ocid
+#   endpoint_type  = var.gateway_endpoint_type
+#   subnet_id      = var.public_subnet_ocid 
+# }
+
+resource "oci_apigateway_deployment" "test_env_deployment" {
   #Required
   compartment_id = var.compartment_ocid
   gateway_id     = var.public_apigateway_ocid 
   path_prefix    = var.deployment_path_prefix
 
+
   specification {
-    routes {
-      #Required
-      backend {
-        #Required
-        type = var.deployment_specification_routes_backend_type
-        url  = var.deployment_specification_routes_backend_url
+
+    request_policies {
+     authentication  {
+        type          = "JWT_AUTHENTICATION"
+        issuers       = ["https://identity.oraclecloud.com/"]
+         # audiences = ["xyz"]
+         token_auth_scheme= "Bearer"
+         token_header ="Authorization"
+        # audiences     = ["your-audience"]
+        # verify_claims {
+        #   key   = "claim-key"
+        #   value = "claim-value"
+        # }
+        # subject_claims = ["sub"]
+         public_keys {
+             type = "REMOTE_JWKS"
+             uri = "${var.domain_url}/admin/v1/SigningCert/jwk"
+             max_cache_duration_in_hours = 3
+         } 
       }
-      path = var.deployment_specification_routes_path
-      methods = var.deployment_specification_routes_methods
     }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+        url = "${var.deployment_specification_routes_backend_base_url}/orgs/"
+      }
+      path = "/api/orgs/" 
+        methods = ["GET", "POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/buyers/"
+      }
+      path = "/api/buyers/" 
+        methods = ["GET", "POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/invoices/"
+      }
+      path = "/api/invoices/" 
+        methods = ["GET", "POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/certificates/csrs/"
+      }
+        path = "/api/certificates/csrs/" 
+        methods = ["POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/certificates/csids/"
+      }
+      path = "/api/certificates/csids/"
+        methods = ["POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/certificates/pcsids/"
+      }
+        path = "/api/certificates/pcsids/" 
+        methods = ["POST"] 
+    }
+
   }
 }
 
-# data "oci_apigateway_gateways" "test_gateways" {
-#   #Required
-#   compartment_id = var.compartment_ocid
-
-#   #Optional
-#   state        = var.gateway_state
-# }
-
-data "oci_apigateway_deployments" "test_deployments" {
-  #Required
-  compartment_id = var.compartment_ocid
-
-  #Optional
-  gateway_id  = var.public_apigateway_ocid 
-  state   = var.deployment_state
-}
