@@ -202,3 +202,7 @@ variable "tenancy_ocid" {
     description = "The OCI Tenancy ocid"
     type        = string
 }
+
+variable "domain_url" {
+  default = ""
+}

@@ -58,7 +58,8 @@ module "api_gateway" {
   user_ocid = var.user_ocid
   private_key_path = var.private_key_path
   fingerprint = var.fingerprint
+  domain_url = var.domain_url
   public_apigateway_ocid = var.public_apigateway_ocid
   private_ip_lb = module.loadbalancer.private_ip_lb
-  deployment_specification_routes_backend_url =  "http://${module.loadbalancer.private_ip_lb[0].ip_address}/api/invoices/"
+  deployment_specification_routes_backend_base_url =  "http://${module.loadbalancer.private_ip_lb[0].ip_address}/api"
 }
