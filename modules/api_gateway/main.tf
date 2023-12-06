@@ -129,8 +129,8 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
          token_header ="Authorization"
         # audiences     = ["your-audience"]
         # verify_claims {
-        #   key   = "claim-key"
-        #   value = "claim-value"
+        #   key   = "isActiveInInvoicingApp"
+        #     values = ["yes"]
         # }
         # subject_claims = ["sub"]
          public_keys {
@@ -138,6 +138,17 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
              uri = "${var.domain_url}/admin/v1/SigningCert/jwk"
              max_cache_duration_in_hours = 3
          } 
+      }
+
+    cors {
+        # allowed_origins = ["https://coral-app-5d4ev.ondigitalocean.app"]
+        # allow all origings for testing
+        allowed_origins = ["*"]
+        allowed_methods = ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+        # note cors works only when Authorization header is allowed
+        allowed_headers = ["Content-Type", "Authorization"]
+        # exposed_headers = ["Access-Control-Allow-Origin"]
+
       }
     }
 
@@ -193,6 +204,16 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
       }
         path = "/api/certificates/pcsids/" 
         methods = ["POST"] 
+    }
+
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/users/userinfo/"
+      }
+      path = "/api/users/userinfo/" 
+        methods = ["GET", "POST"] 
     }
 
   }
