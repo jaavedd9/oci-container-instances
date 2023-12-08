@@ -30,6 +30,19 @@ variable "compartment_ocid" {
     type        = string
 }
 
+
+variable "root_compartment_ocid" {
+    description = "The OCI root Compartment ocid"
+    type        = string
+}
+
+
+variable "vcn_ocid" {
+    description = "The OCI Private Subnet ocid"
+    type        = string
+}
+
+
 variable "private_subnet_ocid" {
     description = "The OCI Private Subnet ocid"
     type        = string
@@ -37,6 +50,11 @@ variable "private_subnet_ocid" {
 
 variable "public_subnet_ocid" {
     description = "The OCI Public Subnet ocid"
+    type        = string
+}
+
+variable "vcn_compartment_ocid" {
+    description = "The OCI VCN Compartment ocid"
     type        = string
 }
 
@@ -205,4 +223,18 @@ variable "tenancy_ocid" {
 
 variable "domain_url" {
   default = ""
+}
+
+variable "superadmin_ocid" {
+    description = "The OCI Superuser ocid"
+    type        = string
+}
+
+
+variable "opensearch_security_master_user_name" {
+  // Description or default value (if any) for opensearch_security_master_user_name
+}
+
+variable "opensearch_security_master_user_password_hash" {
+  // Description or default value (if any) for opensearch_security_master_user_password_hash
 }

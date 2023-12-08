@@ -63,3 +63,17 @@ module "api_gateway" {
   private_ip_lb = module.loadbalancer.private_ip_lb
   deployment_specification_routes_backend_base_url =  "http://${module.loadbalancer.private_ip_lb[0].ip_address}/api"
 }
+
+
+module "opensearch" {
+    source  = "./modules/opensearch"
+    root_compartment_ocid  = var.root_compartment_ocid
+    compartment_ocid  = var.compartment_ocid
+    superadmin_ocid = var.superadmin_ocid
+    vcn_compartment_ocid = var.vcn_compartment_ocid
+    vcn_ocid = var.vcn_ocid
+    public_subnet_ocid = var.public_subnet_ocid
+    opensearch_security_master_user_name = var.opensearch_security_master_user_name
+    opensearch_security_master_user_password_hash = var.opensearch_security_master_user_password_hash
+
+}
