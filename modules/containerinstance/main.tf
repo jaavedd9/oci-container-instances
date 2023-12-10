@@ -138,7 +138,9 @@ resource "oci_container_instances_container_instance" "this" {
         "OPENSEARCH_LOG_PASSWORD"="${var.ci_container_env_variables.OPENSEARCH_LOG_PASSWORD}"
         "OPENSEARCH_LOG_INDEX"="${var.ci_container_env_variables.OPENSEARCH_LOG_INDEX}"
         "DJANGO_OPENSEARCH_LOG_LEVEL"="${var.ci_container_env_variables.DJANGO_OPENSEARCH_LOG_LEVEL}"
+        "DJANGO_LOG_LEVEL"="${var.ci_container_env_variables.DJANGO_LOG_LEVEL}"
         "APP_ENV"="${var.ci_container_env_variables.APP_ENV}"
+        "SENTRY_DSN"="${var.ci_container_env_variables.SENTRY_DSN}"
 
     }
     image_url             = var.ci_image_url
