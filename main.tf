@@ -77,3 +77,14 @@ module "opensearch" {
     opensearch_security_master_user_password_hash = var.opensearch_security_master_user_password_hash
 
 }
+
+
+module "objectstorage" {
+    source = "./modules/objectstorage"
+    compartment_ocid  = var.compartment_ocid
+    compartment_name = var.compartment_name
+    root_compartment_ocid  = var.root_compartment_ocid
+    objectstorage_namespace = var.objectstorage_namespace
+    objectstorage_bucket_name = var.objectstorage_bucket_name
+
+}

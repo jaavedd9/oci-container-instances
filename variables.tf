@@ -30,6 +30,12 @@ variable "compartment_ocid" {
     type        = string
 }
 
+variable "compartment_name" {
+  // Description or default value (if any) for compartment_name
+} 
+
+
+
 
 variable "root_compartment_ocid" {
     description = "The OCI root Compartment ocid"
@@ -230,7 +236,7 @@ variable "superadmin_ocid" {
     type        = string
 }
 
-
+# opensearch
 variable "opensearch_security_master_user_name" {
   // Description or default value (if any) for opensearch_security_master_user_name
 }
@@ -238,3 +244,13 @@ variable "opensearch_security_master_user_name" {
 variable "opensearch_security_master_user_password_hash" {
   // Description or default value (if any) for opensearch_security_master_user_password_hash
 }
+
+# objectstorage
+variable "objectstorage_namespace" {
+  // Description or default value (if any) for objectstorage_namespace
+}
+
+variable "objectstorage_bucket_name" {
+  // Description or default value (if any) for objectstorage_bucket_name
+}
+
