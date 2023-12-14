@@ -112,6 +112,8 @@ variable "private_ip_lb" {
 # }
 
 resource "oci_apigateway_deployment" "test_env_deployment" {
+ # https://registry.terraform.io/providers/oracle/oci/latest/docs/data-sources/apigateway_deployment   
+
   #Required
   compartment_id = var.compartment_ocid
   gateway_id     = var.public_apigateway_ocid 
@@ -128,10 +130,11 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
          token_auth_scheme= "Bearer"
          token_header ="Authorization"
         # audiences     = ["your-audience"]
-        # verify_claims {
-        #   key   = "isActiveInInvoicingApp"
-        #     values = ["yes"]
-        # }
+         verify_claims {
+            is_required = true
+            key   = "can_access_invoicing_app_claim"
+            values = ["yes"]
+        }
         # subject_claims = ["sub"]
          public_keys {
              type = "REMOTE_JWKS"
