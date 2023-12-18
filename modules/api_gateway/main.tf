@@ -185,6 +185,15 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/invoices/searches/"
+      }
+      path = "/api/invoices/searches/" 
+        methods = ["GET", "POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
           url = "${var.deployment_specification_routes_backend_base_url}/certificates/csrs/"
       }
         path = "/api/certificates/csrs/" 
@@ -209,13 +218,21 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
         methods = ["POST"] 
     }
 
-
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
           url = "${var.deployment_specification_routes_backend_base_url}/users/userinfo/"
       }
       path = "/api/users/userinfo/" 
+        methods = ["GET", "POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/users/"
+      }
+      path = "/api/users/" 
         methods = ["GET", "POST"] 
     }
 
