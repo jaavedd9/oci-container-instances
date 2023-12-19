@@ -129,7 +129,7 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
          # audiences = ["xyz"]
          token_auth_scheme= "Bearer"
          token_header ="Authorization"
-        # audiences     = ["your-audience"]
+        audiences     = ["your-audience"]
          verify_claims {
             is_required = true
             key   = "can_access_invoicing_app_claim"
