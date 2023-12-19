@@ -19,6 +19,12 @@ variable "objectstorage_bucket_name" {
   // Description or default value (if any) for objectstorage_bucket_name
 }
 
+variable "objectstorage_group_name"{
+    description = "objectstorage_group_name"
+    type        = string
+    default     = "invocing-app-objectstorage"
+    
+}
 
 // https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/objectstorage_bucket
 resource "oci_objectstorage_bucket" "bucket" {
@@ -33,19 +39,19 @@ resource "oci_objectstorage_bucket" "bucket" {
 
 
 resource "oci_identity_group" "group" {
-  name = "invocing-app-objectstorage"
-  description = "access to invoicing-app object storage"
-  compartment_id = var.root_compartment_ocid
+   name = "${var.objectstorage_group_name}"
+   description = "access to invoicing-app object storage"
+   compartment_id = var.root_compartment_ocid
 }
 
 
 resource "oci_identity_policy" "bucket_policy" {
   name = "object_storage_policy"
   description = "object_storage_policy"
-  compartment_id = var.root_compartment_ocid
+  compartment_id = var.compartment_ocid
   statements = [
     # "Allow group invocing-apis to read buckets in compartment ${var.compartment_name}",
-    "Allow group invocing-apis to manage objects in compartment ${var.compartment_name}"
+    "Allow group ${var.objectstorage_group_name} to manage objects in compartment ${var.compartment_name}"
   ]
 }
 
