@@ -64,7 +64,6 @@ module "api_gateway" {
   deployment_specification_routes_backend_base_url =  "http://${module.loadbalancer.private_ip_lb[0].ip_address}/api"
 }
 
-
 # module "opensearch" {
 #     source  = "./modules/opensearch"
 #     root_compartment_ocid  = var.root_compartment_ocid

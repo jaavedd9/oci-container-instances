@@ -34,10 +34,18 @@ variable "opensearch_security_master_user_password_hash" {
   // Description or default value (if any) for opensearch_security_master_user_password_hash
 }
 
+
+variable "opensearch_group_name" {
+    description = "opensearch_group_name"
+    type        = string
+    default     = "SearchOpenSearchAdmins"
+}
+
+
 resource "oci_identity_group" "opensearch_admins" {
   compartment_id = var.root_compartment_ocid
-  name = "SearchOpenSearchAdmins"
-  description = "SearchOpenSearchAdmins"
+    name = var.opensearch_group_name
+    description = "opensearch group"
 }
 
 resource "oci_identity_user_group_membership" "opensearch_admin_membership" {
@@ -47,6 +55,7 @@ resource "oci_identity_user_group_membership" "opensearch_admin_membership" {
 }
 
 resource "oci_identity_policy" "opensearch_policy" {
+    # this policy requires resources from other compartments, it should be in root compartment
   compartment_id = var.root_compartment_ocid
   name = "opensearch_policy"
   description = "opensearch_policy"
@@ -55,8 +64,8 @@ resource "oci_identity_policy" "opensearch_policy" {
     "allow service opensearch to manage vnics in compartment Network",
     "allow service opensearch to use subnets in compartment Network",
     "allow service opensearch to use network-security-groups in compartment Network",
-      "allow service opensearch to {VNIC_CREATE} in compartment Network",
-    "allow group SearchOpenSearchAdmins to manage opensearch-family in compartment Dev",
+    "allow service opensearch to {VNIC_CREATE} in compartment Network",
+    "allow group ${var.opensearch_group_name} to manage opensearch-family in compartment Dev",
   ]
 }
 
@@ -68,8 +77,8 @@ resource "oci_identity_policy" "opensearch_policy" {
 resource "oci_opensearch_opensearch_cluster" "test_cluster" {
   # Required parameters
   compartment_id = var.compartment_ocid
-  display_name   = "projectx-test"
-  software_version = "2.3.0"
+  display_name   = "invoicing-app-cluster"
+  software_version = "2.8.0"
 
   # Network configuration
     subnet_id = var.public_subnet_ocid 

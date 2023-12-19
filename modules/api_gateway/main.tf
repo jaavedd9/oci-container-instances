@@ -126,12 +126,11 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
      authentication  {
         type          = "JWT_AUTHENTICATION"
         issuers       = ["https://identity.oraclecloud.com/"]
-         # audiences = ["xyz"]
+         audiences = ["invoicing-apis"]
          token_auth_scheme= "Bearer"
          token_header ="Authorization"
-        audiences     = ["your-audience"]
          verify_claims {
-            is_required = true
+            is_required = false
             key   = "can_access_invoicing_app_claim"
             values = ["yes"]
         }
