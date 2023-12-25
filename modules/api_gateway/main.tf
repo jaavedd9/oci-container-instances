@@ -163,15 +163,26 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
         methods = ["GET", "POST"] 
     }
 
+   # buyers
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
           url = "${var.deployment_specification_routes_backend_base_url}/buyers/"
       }
       path = "/api/buyers/" 
+        methods = ["GET", "POST", "PUT"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/buyers/mybuyers/"
+      }
+      path = "/api/buyers/mybuyers/" 
         methods = ["GET", "POST"] 
     }
 
+    # invoices
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
@@ -189,6 +200,16 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
       path = "/api/invoices/searches/" 
         methods = ["GET", "POST"] 
     }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/invoices/searches/unique-values/"
+      }
+      path = "/api/invoices/searches/unique-values/" 
+        methods = ["GET", "POST"] 
+    }
+
 
     routes {
       backend {
