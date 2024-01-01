@@ -24,6 +24,7 @@ module "containerinstance" {
   ci_memory = var.ci_memory
   ci_container_name = var.ci_container_name
   ci_image_url = var.ci_image_url
+  ci_worker_image_url = var.ci_worker_image_url
   ci_image_url_bis = var.ci_image_url_bis
   ci_registry_secret = var.ci_registry_secret
   ci_count = var.ci_count
@@ -87,3 +88,11 @@ module "objectstorage" {
     objectstorage_bucket_name = var.objectstorage_bucket_name
 
 }
+
+
+# getting The provider hashicorp/oci does not support resource type "oci_redis_redis_cluster" error
+# module "redis" {
+#     source = "./modules/redis"
+#     compartment_id  = var.compartment_ocid
+#     subnet_id = var.private_subnet_ocid
+# }

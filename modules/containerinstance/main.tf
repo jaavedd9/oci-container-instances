@@ -69,6 +69,12 @@ variable "ci_image_url" {
     type        = string
 }
 
+variable "ci_worker_image_url" {
+    description = "The OCI Container Image Url"
+    type        = string
+}
+
+
 variable "ci_image_url_bis" {
     description = "The OCI Container Image Url"
     type        = string
@@ -142,22 +148,27 @@ resource "oci_container_instances_container_instance" "this" {
         "APP_ENV"="${var.ci_container_env_variables.APP_ENV}"
         "SENTRY_DSN"="${var.ci_container_env_variables.SENTRY_DSN}"
         "OPENSEARCH_SEARCH_DB_URL"="${var.ci_container_env_variables.OPENSEARCH_SEARCH_DB_URL}"
+        "CELERY_BROKER_ENDPOINT"="${var.ci_container_env_variables.CELERY_BROKER_ENDPOINT}"
+        "ORACLE_BUCKET_NAMESPACE"="${var.ci_container_env_variables.ORACLE_BUCKET_NAMESPACE}"
+        "ORACLE_CUSTOMER_ACCESS_KEY"="${var.ci_container_env_variables.ORACLE_CUSTOMER_ACCESS_KEY}"
+        "ORACLE_CUSTOMER_SECRET_KEY"="${var.ci_container_env_variables.ORACLE_CUSTOMER_SECRET_KEY}"
 
     }
     image_url             = var.ci_image_url
   }
 
-  image_pull_secrets {
-        #Required
-        registry_endpoint = "fra.ocir.io"
-        #secret_type = "BASIC"
-        #username = base64encode("username")
-        #password = base64encode("password")
-        secret_type = "VAULT"
-        secret_id = var.ci_registry_secret
-    }
+  # image_pull_secrets {
+  #       #Required
+  #       registry_endpoint = "fra.ocir.io"
+  #       #secret_type = "BASIC"
+  #       #username = base64encode("username")
+  #       #password = base64encode("password")
+  #       secret_type = "VAULT"
+  #       secret_id = var.ci_registry_secret
+  #   }
 }
 
+# for canerey deployment
 resource "oci_container_instances_container_instance" "thisbis" {
   count = var.ci_count_bis
   compartment_id           = var.compartment_ocid
@@ -196,4 +207,61 @@ resource "oci_container_instances_container_instance" "thisbis" {
         secret_type = "VAULT"
         secret_id = var.ci_registry_secret
     }
+}
+
+
+# celery worker
+resource "oci_container_instances_container_instance" "worker" {
+  count = var.ci_count
+  compartment_id           = var.compartment_ocid
+  display_name             = "${var.ci_name}-worker"
+  availability_domain      = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")}"
+  container_restart_policy = var.ci_restart_policy
+  state                    = var.ci_state
+  shape                    = var.ci_shape
+  shape_config {
+    ocpus         = var.ci_ocpus
+    memory_in_gbs = var.ci_memory
+  }
+  vnics {
+    display_name           = "nicnamenew${count.index}-worker"
+    hostname_label         = "hostnamenew${count.index}-worker"
+    subnet_id              = var.private_subnet_ocid
+    skip_source_dest_check = false
+    is_public_ip_assigned  = false
+  }
+  containers {
+    display_name          = "${var.ci_container_name}${count.index}"
+    environment_variables = {
+        "DATABASE_URL" = "${var.ci_container_env_variables.DATABASE_URL}"
+        "AES_MASTER_KEY" = "${var.ci_container_env_variables.AES_MASTER_KEY}"
+        "DEVELOPMENT_MODE" = "${var.ci_container_env_variables.DEVELOPMENT_MODE}"
+        "OPENSEARCH_LOG_ENABLED"="${var.ci_container_env_variables.OPENSEARCH_LOG_ENABLED}"
+        "OPENSEARCH_LOG_DB_URL"="${var.ci_container_env_variables.OPENSEARCH_LOG_DB_URL}"
+        "OPENSEARCH_LOG_USERNAME"="${var.ci_container_env_variables.OPENSEARCH_LOG_USERNAME}"
+        "OPENSEARCH_LOG_PASSWORD"="${var.ci_container_env_variables.OPENSEARCH_LOG_PASSWORD}"
+        "OPENSEARCH_LOG_INDEX"="${var.ci_container_env_variables.OPENSEARCH_LOG_INDEX}"
+        "DJANGO_OPENSEARCH_LOG_LEVEL"="${var.ci_container_env_variables.DJANGO_OPENSEARCH_LOG_LEVEL}"
+        "DJANGO_LOG_LEVEL"="${var.ci_container_env_variables.DJANGO_LOG_LEVEL}"
+        "APP_ENV"="${var.ci_container_env_variables.APP_ENV}"
+        "SENTRY_DSN"="${var.ci_container_env_variables.SENTRY_DSN}"
+        "OPENSEARCH_SEARCH_DB_URL"="${var.ci_container_env_variables.OPENSEARCH_SEARCH_DB_URL}"
+        "CELERY_BROKER_ENDPOINT"="${var.ci_container_env_variables.CELERY_BROKER_ENDPOINT}"
+        "ORACLE_BUCKET_NAMESPACE"="${var.ci_container_env_variables.ORACLE_BUCKET_NAMESPACE}"
+        "ORACLE_CUSTOMER_ACCESS_KEY"="${var.ci_container_env_variables.ORACLE_CUSTOMER_ACCESS_KEY}"
+        "ORACLE_CUSTOMER_SECRET_KEY"="${var.ci_container_env_variables.ORACLE_CUSTOMER_SECRET_KEY}"
+
+    }
+    image_url             = var.ci_worker_image_url
+  }
+
+  # image_pull_secrets {
+  #       #Required
+  #       registry_endpoint = "fra.ocir.io"
+  #       #secret_type = "BASIC"
+  #       #username = base64encode("username")
+  #       #password = base64encode("password")
+  #       secret_type = "VAULT"
+  #       secret_id = var.ci_registry_secret
+  #   }
 }

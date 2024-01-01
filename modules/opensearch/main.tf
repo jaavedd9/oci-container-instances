@@ -110,3 +110,7 @@ resource "oci_opensearch_opensearch_cluster" "test_cluster" {
   opendashboard_node_host_memory_gb    = 8
 
 }
+
+
+
+

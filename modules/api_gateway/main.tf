@@ -154,16 +154,17 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
       }
     }
 
+    ## sellers
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
-        url = "${var.deployment_specification_routes_backend_base_url}/orgs/"
+        url = "${var.deployment_specification_routes_backend_base_url}/sellers/"
       }
-      path = "/api/orgs/" 
-        methods = ["GET", "POST"] 
+      path = "/api/sellers/" 
+        methods = ["GET", "POST", "PUT"] 
     }
 
-   # buyers
+   ## buyers
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
@@ -182,7 +183,7 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
         methods = ["GET", "POST"] 
     }
 
-    # invoices
+    ## invoices
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
@@ -192,6 +193,7 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
         methods = ["GET", "POST"] 
     }
 
+    ## invoice search
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
@@ -204,13 +206,13 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
-          url = "${var.deployment_specification_routes_backend_base_url}/invoices/searches/unique-values/"
+          url = "${var.deployment_specification_routes_backend_base_url}/invoices/searches/index-filters/"
       }
-      path = "/api/invoices/searches/unique-values/" 
+      path = "/api/invoices/searches/index-filters/" 
         methods = ["GET", "POST"] 
     }
 
-
+    ## certificates
     routes {
       backend {
         type = var.deployment_specification_routes_backend_type
@@ -238,14 +240,7 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
         methods = ["POST"] 
     }
 
-    routes {
-      backend {
-        type = var.deployment_specification_routes_backend_type
-          url = "${var.deployment_specification_routes_backend_base_url}/users/userinfo/"
-      }
-      path = "/api/users/userinfo/" 
-        methods = ["GET", "POST"] 
-    }
+    ## users
 
     routes {
       backend {
@@ -255,6 +250,25 @@ resource "oci_apigateway_deployment" "test_env_deployment" {
       path = "/api/users/" 
         methods = ["GET", "POST"] 
     }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/users/roles/"
+      }
+      path = "/api/users/roles/" 
+        methods = ["GET", "POST"] 
+    }
+
+    routes {
+      backend {
+        type = var.deployment_specification_routes_backend_type
+          url = "${var.deployment_specification_routes_backend_base_url}/users/userinfo/"
+      }
+      path = "/api/users/userinfo/" 
+        methods = ["GET", "POST"] 
+    }
+
 
   }
 }

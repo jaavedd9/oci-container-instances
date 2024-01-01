@@ -122,6 +122,11 @@ variable "ci_image_url_bis" {
     type        = string
 }
 
+variable "ci_worker_image_url" {
+    description = "The OCI Container Image Url"
+    type        = string
+}
+
 variable "ci_registry_secret" {
     description = "The OCI Vault Secret Id with username and password of OCI registry"
     type        = string
